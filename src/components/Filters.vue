@@ -1,5 +1,6 @@
 <template>
-    <div class="flex flex-col md:flex-row items-center w-full py-2 my-2 space-y-2 md:space-y-0 md:space-x-2 border border-gray-200">
+    <div
+        class="flex flex-col md:flex-row items-center w-full py-2 my-2 space-y-2 md:space-y-0 md:space-x-2 border border-gray-200">
         <!-- Filter Items for Mobile (Centered) -->
         <div class="md:hidden flex flex-col items-center w-auto">
             <!-- Product Count Display -->
@@ -15,11 +16,11 @@
                         class="w-full border p-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 bg-gray-100" />
                     <button @click="executeSearch"
                         class="absolute inset-y-0 right-0 flex items-center justify-center px-2 text-gray-500 cursor-pointer">
-                        <svg v-if="searchTerm === ''" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                viewBox="0 0 24 24" class="w-4 h-4">
-                                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                            </svg>
+                        <svg v-if="searchTerm === ''" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
+                            class="w-4 h-4">
+                            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
                     </button>
                 </div>
             </div>
@@ -59,9 +60,10 @@
             <div class="relative inline-block text-gray-700">
                 <select v-model="selectedSortOption"
                     class="block appearance-none w-full md:w-auto bg-white border border-gray-300 hover:border-gray-400 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:ring">
-                    <option value="default">Default</option>
+                    <option value="default">Name (A-Z)</option>
                     <option value="price-asc">Price (Low to High)</option>
-                    <option value="price-desc">Price (High to Low)</option>
+                    <option value="price-desc">Price ( High to Low)</option>
+                    <option value="cat-alpha">category (A-Z)</option>
                     <!-- Add more sorting options as needed -->
                 </select>
                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -89,11 +91,18 @@ const executeSearch = () => {
     productStore.updateFilteredProducts(searchTerm.value);
 };
 
+const sortProducts = () => {
+    productStore.sortProducts(selectedSortOption.value);
+};
+
 const filteredProducts = computed(() => productStore.filteredProducts);
 
-// Watch for changes in the searchTerm and trigger search
-watch(searchTerm, () => {
+
+watch([searchTerm, selectedSortOption], () => {
     executeSearch();
+    sortProducts()
 });
+
+
 </script>
 

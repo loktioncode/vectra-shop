@@ -57,6 +57,21 @@ export const useProductStore = defineStore({
                 this.filteredProducts = [...this.products];
             }
         },
+        sortProducts(sortType: string) {
+            if (sortType) {
+                switch (sortType) {
+                    case 'price-asc':
+                        return this.filteredProducts.sort((a, b) => a.price - b.price);
+                    case 'price-desc':
+                        return this.filteredProducts.sort((a, b) => b.price - a.price);
+                    case 'cat-alpha':
+                        return this.filteredProducts.sort((a, b) => a.category.name.localeCompare(b.category.name));
+                    default:
+                        return this.filteredProducts.sort((a, b) => a.title.localeCompare(b.title));
+                }
+            }
+        },
+
     },
 });
 
