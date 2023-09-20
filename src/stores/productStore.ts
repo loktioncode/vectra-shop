@@ -6,7 +6,7 @@ export interface Product {
     description: string;
     price: number;
     image: string;
-    category: string;
+    category: { name: string };
 }
 
 export const useProductStore = defineStore({
@@ -44,9 +44,13 @@ export const useProductStore = defineStore({
         // action to update filteredProducts based on search term
         updateFilteredProducts(searchTerm: string) {
             if (searchTerm) {
-                this.searchTerm = searchTerm;
+                this.searchTerm = searchTerm.toLowerCase();
                 this.filteredProducts = this.products.filter(product =>
-                    product.title.toLowerCase().includes(searchTerm.toLowerCase())
+                    product.title.toLowerCase().includes(searchTerm) ||
+                    product.description.toLowerCase().includes(searchTerm) ||
+                    product.category.name.toLowerCase().includes(searchTerm) ||
+                    product.price.toString().includes(searchTerm)
+
                 );
             } else {
                 this.searchTerm = '';
