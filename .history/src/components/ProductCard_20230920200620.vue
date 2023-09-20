@@ -1,0 +1,42 @@
+<template>
+    <!-- Card Container -->
+    <div class="">
+  
+      <!-- Image Container with Background Color -->
+      <div class=" lg:px-0 px-4">
+  
+        <!-- Apply adjustments only for mobile devices -->
+        <img :src="product.images[0]" :alt="product.title + ' image'"
+          class="md:object-cover md:object-center w-full mx-auto rounded-t-md dark:bg-white m-8" />
+      </div>
+  
+      <!-- Content Container -->
+      <div class="flex flex-col justify-between p-6 space-y-8">
+        <div>
+          <h2 class="text-3xl font-semibold text-gray-800 truncate">{{ product.title }}</h2>
+          <p class="text-gray-400">{{ product.description }}</p>
+        </div>
+        <div class="flex flex-row flex-wrap justify-between items-center">
+          <div class="flex flex-col justify-start dark:text-gray-500 w-full md:w-8/12">
+            <p class="text-sm">test</p>
+            <p class="text-sm">test</p>
+          </div>
+          <div class="w-full md:w-auto mt-4 md:mt-0">
+            <button type="button"
+              class="flex items-center justify-center w-full p-3 font-semibold tracking-tight rounded dark:bg-gray-400 dark:text-gray-900">
+              Read more
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+  
+  
+  
+<script setup lang="ts">
+import { defineProps } from 'vue';
+
+const { product } = defineProps<{ product: any }>();
+</script>
+  

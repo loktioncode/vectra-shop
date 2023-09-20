@@ -6,7 +6,7 @@
 
   <div class="flex">
     <!-- Left Sidebar for Filters -->
-    <div class="w-1/4 pt-4">
+    <div class="w-auto pt-4 sidebar">
       <aside class="w-full p-6 sm:w-60 dark:bg-gray-900 dark:text-gray-100">
         <nav class="space-y-10 text-sm">
           <div class="space-y-2">
@@ -25,7 +25,7 @@
     </div>
 
     <!-- Right Side for Product Information -->
-    <div class="w-4/4 p-4">
+    <div class="">
       <Products />
     </div>
   </div>
@@ -40,14 +40,23 @@ import Filters from '@/components/Filters.vue'
 </script>
 
 <style>
+.sidebar {
+  display: block;
+
+}
+
 @media (min-width: 1024px) {
   .home {
     min-height: 100vh;
     align-items: center;
   }
+}
 
+@media (max-width: 640px) {
+  .sidebar {
+    display: none;
 
-
+  }
 }
 </style>
 
