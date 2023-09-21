@@ -18,8 +18,7 @@ export const useProductStore = defineStore({
         error: null as string | null,
         searchTerm: '' as string,
         selectedCategory: '' as string,
-        sortType: '' as string,
-        displayedProductsCount: 8
+        sortType: '' as string
     }),
     actions: {
         async fetchProductInfo(apiUrl: string) {
@@ -88,9 +87,7 @@ export const useProductStore = defineStore({
                 }
             }
         },
-        showMoreProducts() {
-            this.displayedProductsCount += 8; // You can adjust the number as per your requirement
-        },
+    
 
     },
     getters: {
