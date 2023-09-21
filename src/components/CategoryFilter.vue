@@ -23,12 +23,29 @@
 </template>
   
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { useProductStore } from '@/stores/productStore';
 
 const productStore = useProductStore();
 const isDropdownOpen = ref(false);
-const selectedCategory = ref('');
+const selectedCategory = ref(localStorage.getItem('selectedCategory') || '');
+
+onMounted(() => {
+  loadFromLocalStorage();
+});
+
+const loadFromLocalStorage = () => {
+  const searchTerm = localStorage.getItem('selectedCategory');
+  if (searchTerm) {
+    productStore.searchTerm = searchTerm;
+  }
+};
+
+
+
+watch([selectedCategory], ([selectedCategory]) => {
+  localStorage.setItem('selectedCategory', selectedCategory);
+});
 
 const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value;

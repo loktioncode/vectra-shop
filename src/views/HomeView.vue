@@ -34,7 +34,7 @@ watchEffect(() => {
   // productStore.saveStateToLocalStorage();
   if (productStore.selectedCategory !== 'on') {
     productStore.sortByCategory(productStore.selectedCategory);
-  }else if (productStore.searchTerm !== 'on') {
+  }else if (productStore.searchTerm !== '') {
     productStore.updateFilteredProducts(productStore.searchTerm);
   }
 });
