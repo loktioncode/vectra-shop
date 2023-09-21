@@ -53,12 +53,13 @@
                             class="block appearance-none w-full md:w-auto bg-gray-900 border  px-4 py-2 pr-8 rounded text-gray-100">
                             Select Category
 
-                     
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-100">
-                            <svg class="fill-current h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                            </svg>
-                        </div>
+
+                            <div
+                                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-100">
+                                <svg class="fill-current h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                </svg>
+                            </div>
 
 
                         </button>
@@ -151,24 +152,24 @@ const toggleDropdown = () => {
 };
 
 const executeSearchByCategory = () => {
+
     productStore.sortByCategory(selectedCategory.value);
 };
 
-
 const executeSearch = () => {
-    // Call the action to update filteredProducts with the search term
     productStore.updateFilteredProducts(searchTerm.value);
 };
-
 const sortProducts = () => {
     productStore.sortProducts(selectedSortOption.value);
 };
 
 const filteredProducts = computed(() => productStore.filteredProducts);
 
-
-watch([searchTerm, selectedSortOption, selectedCategory], () => {
+watch(selectedCategory, () => {
     executeSearchByCategory();
+});
+
+watch([searchTerm, selectedSortOption], () => {
     executeSearch();
     sortProducts()
 });

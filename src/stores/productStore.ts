@@ -58,12 +58,14 @@ export const useProductStore = defineStore({
             }
         },
         sortByCategory(selectedCategory: string) {
-            this.selectedCategory = selectedCategory; // Update selectedCategory
 
+            this.selectedCategory = selectedCategory; // Update selectedCategory
             if (selectedCategory !== 'on') {
                 this.filteredProducts = this.products.filter(product =>
                     product.category.name.toLowerCase().includes(selectedCategory.toLowerCase())
                 );
+                console.log(this.filteredProducts)
+
             } else {
                 this.filteredProducts = [...this.products];
             }
