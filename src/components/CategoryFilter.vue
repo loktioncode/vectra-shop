@@ -28,7 +28,7 @@ import { useProductStore } from '@/stores/productStore';
 
 const productStore = useProductStore();
 const isDropdownOpen = ref(false);
-const selectedCategory = ref(localStorage.getItem('selectedCategory') || '');
+const selectedCategory = ref(localStorage.getItem('selectedCategory') || 'on');
 
 onMounted(() => {
   loadFromLocalStorage();
@@ -42,14 +42,13 @@ const loadFromLocalStorage = () => {
 };
 
 
-
 watch([selectedCategory], ([selectedCategory]) => {
   localStorage.setItem('selectedCategory', selectedCategory);
 });
 
 const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value;
-  selectedCategory.value = ''; // Reset the selected category when the dropdown is opened
+  selectedCategory.value = 'on'; // Reset the selected category when the dropdown is opened
 };
 
 const executeSearchByCategory = () => {

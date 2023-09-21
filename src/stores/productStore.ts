@@ -53,9 +53,6 @@ export const useProductStore = defineStore({
                     product.category.name.toLowerCase().includes(searchTerm) ||
                     product.price.toString().includes(searchTerm)
                 );
-            } else {
-                this.searchTerm = '';
-                this.filteredProducts = [...this.products];
             }
         },
         sortByCategory(selectedCategory: string) {
@@ -70,7 +67,7 @@ export const useProductStore = defineStore({
             }
         },
         sortProducts(sortType: string) {
-            
+
             if (sortType) {
                 switch (sortType) {
                     case 'price-asc':
