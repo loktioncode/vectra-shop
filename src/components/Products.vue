@@ -1,5 +1,5 @@
 <template>
-  <div v-if="productStore.loading">Loading...</div>
+  <div v-if="productStore.loading"><h1>Loading....</h1></div>
   <div v-else>
     <div v-if="productStore.error" class="error-message">{{ productStore.error }}</div>
     <div class="xl:px-10">
