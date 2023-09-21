@@ -1,12 +1,8 @@
 <template>
     <div
-        class="flex flex-col md:flex-row items-center w-full py-2 my-2 space-y-2 md:space-y-0 md:space-x-2 border border-gray-200">
+        class="flex flex-col md:flex-row items-center w-full py-2 my-2 space-y-2 md:space-y-0 md:space-x-2 border border-gray-200 ">
         <!-- Filter Items for Mobile (Centered) -->
-        <div class="md:hidden flex flex-col items-center w-auto">
-
-            <div class="text-lg mb-2 w-full">
-                Total Products: {{ filteredProducts.length }}
-            </div>
+        <div class="md:hidden flex flex-col items-center w-auto ">
 
             <!-- Search Form -->
             <div class="flex items-center w-full">
