@@ -16,7 +16,8 @@ export const useProductStore = defineStore({
         filteredProducts: [] as Product[], // Initialize as an empty array of the correct type
         loading: false,
         error: null as string | null,
-        searchTerm: '' as string
+        searchTerm: '' as string,
+        selectedCategory: '' as string
     }),
     actions: {
         async fetchProductInfo(apiUrl: string) {
@@ -50,28 +51,64 @@ export const useProductStore = defineStore({
                     product.description.toLowerCase().includes(searchTerm) ||
                     product.category.name.toLowerCase().includes(searchTerm) ||
                     product.price.toString().includes(searchTerm)
-
                 );
             } else {
                 this.searchTerm = '';
                 this.filteredProducts = [...this.products];
             }
         },
+        sortByCategory(selectedCategory: string) {
+            this.selectedCategory = selectedCategory; // Update selectedCategory
+
+            if (selectedCategory !== 'on') {
+                this.filteredProducts = this.products.filter(product =>
+                    product.category.name.toLowerCase().includes(selectedCategory.toLowerCase())
+                );
+            } else {
+                this.filteredProducts = [...this.products];
+            }
+        },
         sortProducts(sortType: string) {
+            this.filteredProducts = this.filteredProducts;
             if (sortType) {
                 switch (sortType) {
                     case 'price-asc':
-                        return this.filteredProducts.sort((a, b) => a.price - b.price);
+                        this.filteredProducts.sort((a, b) => a.price - b.price);
+                        break;
                     case 'price-desc':
-                        return this.filteredProducts.sort((a, b) => b.price - a.price);
+                        this.filteredProducts.sort((a, b) => b.price - a.price);
+                        break;
                     case 'cat-alpha':
-                        return this.filteredProducts.sort((a, b) => a.category.name.localeCompare(b.category.name));
+                        // Sort the filtered products by category name
+                        this.filteredProducts.sort((a, b) => a.category.name.localeCompare(b.category.name));
+                        break;
                     default:
-                        return this.filteredProducts.sort((a, b) => a.title.localeCompare(b.title));
+                        // Sort the filtered products by title
+                        this.filteredProducts.sort((a, b) => a.title.localeCompare(b.title));
+                        break;
                 }
             }
         },
 
+
+
     },
+    getters: {
+        getCategories: (state) => {
+            const categorySet = new Set<string>();
+
+            if (state.products) {
+                state.products.forEach((product) => {
+                    categorySet.add(product.category.name);
+                });
+            } else {
+                return [];
+            }
+
+            const categories = Array.from(categorySet);
+
+            return categories.length ? categories : [];
+        }
+    }
 });
 

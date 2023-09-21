@@ -3,7 +3,7 @@
         class="flex flex-col md:flex-row items-center w-full py-2 my-2 space-y-2 md:space-y-0 md:space-x-2 border border-gray-200">
         <!-- Filter Items for Mobile (Centered) -->
         <div class="md:hidden flex flex-col items-center w-auto">
-            <!-- Product Count Display -->
+
             <div class="text-lg mb-2 w-full">
                 Total Products: {{ filteredProducts.length }}
             </div>
@@ -24,11 +24,68 @@
                     </button>
                 </div>
             </div>
+
+
+
+            <div class="flex flex-row justify-between py-4">
+                <div class="flex justify-end w-6/12 md:w-auto pl-2">
+                    <div class="relative inline-block text-gray-700">
+                        <select v-model="selectedSortOption"
+                            class="block appearance-none w-full md:w-auto bg-gray-900 border  px-4 py-2 pr-8 rounded text-gray-100">
+                            <option value="default">Sort by Name (A-Z)</option>
+                            <option value="price-asc">Price (Low to High)</option>
+                            <option value="price-desc">Price ( High to Low)</option>
+                            <option value="cat-alpha">Category (A-Z)</option>
+
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-100">
+                            <svg class="fill-current h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end w-6/12 md:w-auto ">
+                    <div class="relative text-gray-700">
+
+                        <button @click="toggleDropdown"
+                            class="block appearance-none w-full md:w-auto bg-gray-900 border  px-4 py-2 pr-8 rounded text-gray-100">
+                            Select Category
+
+                     
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-100">
+                            <svg class="fill-current h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </div>
+
+
+                        </button>
+
+
+                        <div v-if="isDropdownOpen" class="mt-2 bg-white rounded-md">
+                            <label class="flex justify-start px-4 py-2 hover:bg-gray-100">
+                                <input type="radio" class="mr-2 form-radio" v-model="selectedCategory" />
+                                All
+                            </label>
+                            <label v-for="(category, index) in productStore.getCategories" :key="index"
+                                class="flex justify-start px-4 py-2 hover:bg-gray-100">
+                                <input type="radio" :value="category" v-model="selectedCategory" class="mr-2 form-radio" />
+                                {{ category }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
         </div>
 
         <!-- Filter Items for Desktop -->
         <div class="hidden md:flex justify-start items-center w-full">
-            <!-- Product Count Display -->
+
             <div class="text-lg mb-2 w-3/12">
                 Total Products: {{ filteredProducts.length }}
             </div>
@@ -53,27 +110,28 @@
                 </div>
 
             </div>
-        </div>
+            <div class="flex justify-end w-6/12 md:w-auto pr-12">
+                <div class="relative inline-block text-gray-700">
+                    <select v-model="selectedSortOption"
+                        class="block appearance-none w-full md:w-auto bg-white border border-gray-300 hover:border-gray-400 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:ring">
+                        <option value="default">Name (A-Z)</option>
+                        <option value="price-asc">Price (Low to High)</option>
+                        <option value="price-desc">Price ( High to Low)</option>
+                        <option value="cat-alpha">Category (A-Z)</option>
 
-        <!-- Sort Dropdown -->
-        <div class="flex justify-end w-6/12 md:w-auto pr-12">
-            <div class="relative inline-block text-gray-700">
-                <select v-model="selectedSortOption"
-                    class="block appearance-none w-full md:w-auto bg-white border border-gray-300 hover:border-gray-400 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:ring">
-                    <option value="default">Name (A-Z)</option>
-                    <option value="price-asc">Price (Low to High)</option>
-                    <option value="price-desc">Price ( High to Low)</option>
-                    <option value="cat-alpha">category (A-Z)</option>
-                    <!-- Add more sorting options as needed -->
-                </select>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                        <path
-                            d="M8.293 11.293a1 1 0 001.414 0L12 8.414V18a1 1 0 102 0V8.414l2.293 2.293a1 1 0 101.414-1.414l-4-4a1 1 0 00-1.414 0l-4 4a1 1 0 000 1.414z" />
-                    </svg>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path
+                                d="M8.293 11.293a1 1 0 001.414 0L12 8.414V18a1 1 0 102 0V8.414l2.293 2.293a1 1 0 101.414-1.414l-4-4a1 1 0 00-1.414 0l-4 4a1 1 0 000 1.414z" />
+                        </svg>
+                    </div>
                 </div>
             </div>
         </div>
+
+
+
     </div>
 </template>
 
@@ -84,6 +142,17 @@ import { useProductStore } from '@/stores/productStore';
 const productStore = useProductStore();
 const searchTerm = ref('');
 const selectedSortOption = ref('default');
+const isDropdownOpen = ref(false);
+const selectedCategory = ref('on');
+
+const toggleDropdown = () => {
+    isDropdownOpen.value = !isDropdownOpen.value;
+    selectedCategory.value = 'on';
+};
+
+const executeSearchByCategory = () => {
+    productStore.sortByCategory(selectedCategory.value);
+};
 
 
 const executeSearch = () => {
@@ -98,7 +167,8 @@ const sortProducts = () => {
 const filteredProducts = computed(() => productStore.filteredProducts);
 
 
-watch([searchTerm, selectedSortOption], () => {
+watch([searchTerm, selectedSortOption, selectedCategory], () => {
+    executeSearchByCategory();
     executeSearch();
     sortProducts()
 });
