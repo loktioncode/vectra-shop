@@ -22,35 +22,21 @@
 
 
 <script setup lang="ts">
-import Products from '@/components/Products.vue'
-import Filters from '@/components/Filters.vue'
+import Products from '@/components/ProductListing.vue'
+import Filters from '@/components/TopFilters.vue'
 import CategoryFilter from '@/components/CategoryFilter.vue'
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { watchEffect } from 'vue';
 import { useProductStore } from '@/stores/productStore';
 
 const productStore = useProductStore();
 
-
-
-// Update local storage whenever count changes
-const saveToStorage = () => {
-  const filterState = {
-  searchTerm: '',
-  selectedCategory: '',
-};
-  filterState.searchTerm = productStore.searchTerm;
-  filterState.selectedCategory = productStore.selectedCategory;
-
-
-  localStorage.setItem('searchInput', JSON.stringify(filterState));
-};
-
-onMounted(() => {
-  window.addEventListener('beforeunload', saveToStorage);
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener('beforeunload', saveToStorage);
+watchEffect(() => {
+  // productStore.saveStateToLocalStorage();
+  if (productStore.selectedCategory !== 'on') {
+    productStore.sortByCategory(productStore.selectedCategory);
+  }else if (productStore.searchTerm !== 'on') {
+    productStore.updateFilteredProducts(productStore.searchTerm);
+  }
 });
 
 </script>
@@ -58,7 +44,6 @@ onBeforeUnmount(() => {
 <style>
 .sidebar {
   display: block;
-
 }
 
 @media (min-width: 1024px) {

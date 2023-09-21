@@ -137,14 +137,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { useProductStore } from '@/stores/productStore';
 
 const productStore = useProductStore();
-const searchTerm = ref('');
+const searchTerm = ref(localStorage.getItem('searchTerm') || '');
 const selectedSortOption = ref('default');
 const isDropdownOpen = ref(false);
 const selectedCategory = ref('on');
+
+const filteredProducts = computed(() => productStore.filteredProducts);
+
+
+onMounted(() => {
+    loadFromLocalStorage();
+});
+
+const loadFromLocalStorage = () => {
+    const searchTerm = localStorage.getItem('searchTerm');
+    if (searchTerm) {
+        productStore.searchTerm = searchTerm;
+    }
+};
+
 
 const toggleDropdown = () => {
     isDropdownOpen.value = !isDropdownOpen.value;
@@ -152,7 +167,6 @@ const toggleDropdown = () => {
 };
 
 const executeSearchByCategory = () => {
-
     productStore.sortByCategory(selectedCategory.value);
 };
 
@@ -163,17 +177,18 @@ const sortProducts = () => {
     productStore.sortProducts(selectedSortOption.value);
 };
 
-const filteredProducts = computed(() => productStore.filteredProducts);
-
 watch(selectedCategory, () => {
     executeSearchByCategory();
 });
 
 watch([searchTerm, selectedSortOption], () => {
     executeSearch();
-    sortProducts()
+    sortProducts();
 });
 
+watch([searchTerm], ([newSearchTerm]) => {
+    localStorage.setItem('searchTerm', newSearchTerm);
+});
 
 </script>
 

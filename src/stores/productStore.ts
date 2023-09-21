@@ -17,7 +17,8 @@ export const useProductStore = defineStore({
         loading: false,
         error: null as string | null,
         searchTerm: '' as string,
-        selectedCategory: '' as string
+        selectedCategory: '' as string,
+        sortType: '' as string
     }),
     actions: {
         async fetchProductInfo(apiUrl: string) {
@@ -69,7 +70,7 @@ export const useProductStore = defineStore({
             }
         },
         sortProducts(sortType: string) {
-            this.filteredProducts = this.filteredProducts;
+            
             if (sortType) {
                 switch (sortType) {
                     case 'price-asc':
